@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Post {% endblock %}
+
+{% block navbar %} {% include 'fragments/navbar.html' %} {% endblock %}
+
+{% block content %}
+
+<div class="col-xl-8">
+
+    <hr class="my-4" style="color: #8B4513;">
+
+    <div class="container-fluid px-0">
+        <div class="flex-row d-flex my-2">
+            <h2 style="color: #8B4513;"> {{ post.titulo }}</h2>
+
+            <!-- Contém todos os ícones de redes sociais e compartilhamento -->
+            <span class=" d-flex justify-content-center align-items-center ms-5">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <span class="ms-3"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top"
+                                      title="Compartilhe no Instagram!">
+
+                                <i class="fa-brands fa-instagram fa-2xl" style="color: #8B4513;"></i>
+
+                            </span>
+                            </a>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <span class="ms-3"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top"
+                                      title="Compartilhe no Facebook!">
+                                <i class="fa-brands fa-facebook fa-2xl" style="color: #8B4513;"></i>
+
+                            </span>
+                            </a>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <span class="ms-3"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top"
+                                      title="Compartilhe no WhatsApp!">
+
+                                <i class="fa-brands fa-whatsapp fa-2xl" style="color: #8B4513;"></i>
+
+                            </span>
+                            </a>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <span class="ms-3"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top"
+                                      title="Compartilhe no Twitter!">
+
+                                <i class="fa-brands fa-twitter fa-2xl" style="color: #8B4513;"></i>
+
+                            </span>
+                            </a>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <span class="ms-3"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top"
+                                      title="Copie o link!">
+
+                                <i class="fa-solid fa-link fa-2xl" style="color: #8B4513;"></i>
+
+                            </span>
+                            </a>
+            </span>
+
+        </div>
+    </div>
+
+    <!-- Cabeçalho do post -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-row align-items-center">
+                <div class="rounded-circle border d-flex justify-content-center
+                            align-items-center bg-info avatar">
+                    <img src="{{ post.autor.foto.url }}"
+                         style="height:85px; width:85px"
+                         class="rounded-circle">
+                </div>
+
+                <p class="mb-0">
+                                <span class="text-muted justify-content-center">
+                                    <span class="mx-2 h5" style="color: #8B4513;">
+                                        {{ post.autor }}
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-clock" style="color: #8B4513;"></i>
+                                        <span style="color: #8B4513;">
+                                            {{ post.tempo_leitura }}Min
+                                        </span>
+                                    </span>
+
+                                    <br>
+
+                                    <span class="ms-2 me-1"><i class="fa-solid fa-tags" style="color: #8B4513;"></i></span>
+                                    {% for tag in post.tag_set.all %}
+                                    <span style="color: #8B4513;">
+                                        <a href="#" class="text-decoration-none" style="color: #8B4513;">#{{ tag.nome }}</a>
+                                    </span>
+                                    {% endfor %}
+
+                                    <br>
+
+                                    <span class="mx-2" style="color: #8B4513;">
+                                        {{ post.subtitulo }}
+                                    </span>
+                                </span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4" style="color: #8B4513;">
+
+    <!-- Conteúdo do post -->
+    <article class="fs-5" style="font-family: 'Times New Roman', Times, serif;">
+        {{ post.conteudo|safe }}
+    </article>
+
+    <hr class="my-4" style="color: #8B4513;">
+
+</div>
+
+
+{% endblock %}
+
+{% block footer %} {% include 'fragments/footer.html' %} {% endblock %}

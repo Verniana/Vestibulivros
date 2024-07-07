@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block navbar %} {% include 'fragments/navbar.html' %} {% endblock %}
+
+{% block content %}
+
+<div class="col-xl-8">
+    {% load socialaccount %}
+    <div class="row justify-content-center">
+
+        <!-- Se o usuário não estiver logado, mostre isso -->
+        {% if not user.is_authenticated %}
+
+        <div class="col-md-6">
+            <div class="card-body my-4 border rounded bg-light p-3">
+
+                <!-- Título -->
+                <div class="mt-3">
+                    <span class="fw-bold fs-2" style="color: #8B4513;">Login</span>
+                </div>
+
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+
+                    <!-- Se o usuário errar a senha ou o username, retorne uma mensagem -->
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger text-center mt-2" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <!-- Campo para inserir o usuário -->
+                    <p class="form-label mt-3 fw-bold" style="color: #333;">Usuário:</p>
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control"
+                               id="idEmailLogin"
+                               name="username"
+                               value="{{username}}"
+                               placeholder="name@example.com">
+                        <label for="idEmailLogin" class="text-muted" style="color: #333;">Digite aqui seu usuário</label>
+                    </div>
+
+                    <!-- Campo para inserir a senha -->
+                    <p class="form-label mt-3 fw-bold" style="color: #333;">Senha:</p>
+                    <div class="form-floating">
+                        <input type="password"
+                               class="form-control"
+                               id="idSenhaLogin"
+                               name="password"
+                               value="{{password}}"
+                               placeholder="Password">
+                        <label for="idSenhaLogin" class="text-muted" style="color: #333;">Digite aqui sua senha</label>
+                    </div>
+
+                    <!-- Link para recuperação de senha -->
+                    <div class="my-2 text-end">
+                        <a class="btn" href="{% url 'password_reset' %}">
+                                    <span class="fw-bold" style="color: #8B0000;">
+                                        Esqueceu sua senha?
+                                    </span>
+                        </a>
+                    </div>
+
+                    <!-- Botão de logar -->
+                    <div class="d-grid mt-3">
+                        <button class="btn" type="submit" style="background-color: #8B4513; color: #f5f5dc;">
+                            Logar
+                        </button>
+                    </div>
+
+                    <!-- Botão de logar com Google -->
+                    <div class="d-grid mt-2">
+                        <a href="{% provider_login_url 'google' %}" class="btn" type="button" style="background-color: #8B0000; color: #f5f5dc;">
+                            <i class="fa-brands fa-google"></i>
+                        </a>
+                    </div>
+
+                    <!-- Link para redirecionar o usuário para criar conta -->
+                    <div class="my-2 text-center">
+                        <a href="{% url 'contas' %}" class="btn fw-bold" style="color: #333;">
+                            Cria conta
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Caso o usuário esteja logado, retorno isso -->
+        {% else %}
+
+        <div class="col-md-10">
+            <div class="card my-5">
+
+                <!-- Pergunta se o usuário quer deslogar  -->
+                <div class="card-header p-5">
+                    <h3 class="text-center" style="color: #8B4513;">{{ user.username }}, você já está logado(a) no
+                        sistema! </h3>
+                    <p class="h5 text-center" style="color: #333;">Deseja mesmo deslogar?</p>
+                </div>
+
+                <div class="card-body d-flex justify-content-center">
+
+                    <!-- Botão para deslogar e ser redirecionado ao formulário de login-->
+                    <button type="button"
+                            class="btn me-2"
+                            hx-get="{% url 'logout' %}"
+                            hx-trigger="click"
+                            hx-target="body"
+                            style="background-color: #8B4513; color: #f5f5dc;"> Sim </button>
+
+                    <!-- Botão para permanecer logado e ser redirecionado a home-->
+                    <button type="button"
+                            class="btn"
+                            hx-get="{% url 'ir_home' %}"
+                            hx-trigger="click"
+                            hx-target="body"
+                            hx-swap="outerHTML"
+                            hx-push-url="true"
+                            style="background-color: #8B0000; color: #f5f5dc;"> Não </button>
+
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %} {% include 'fragments/footer.html' %} {% endblock %}

@@ -1,0 +1,22 @@
+<!-- Vai informar ao usuário a situação do username que se pretende cadastrar -->
+<div id="usr_val" hx-swap-oob="true">
+    <label style='color:{{ cor }};'> {{ usr_val }} </label>
+</div>
+
+<!-- Vai informar ao usuário a situação do e-mail que se pretende cadastrar -->
+<div id="usr_email" hx-swap-oob="true">
+    <label style='color:{{ cor }};'> {{ usr_email }} </label>
+</div>
+
+<!-- Vai informar ao usuário se as senhas são iguais -->
+<div id="error_pwd" hx-swap-oob="true">
+    <label style='color:{{ cor }};'> {{ error_pwd }} </label>
+</div>
+
+<!-- Vai travar ou destravar o botão de criar conta dependendo das informações já passadas pelo usuário -->
+<div id="botao_submit" hx-swap-oob="true">
+    <button class="w-100 btn btn-lg"
+            type="submit"
+            {{ st_submit }}
+            style="background-color: #8B4513; color: #f5f5dc;">Criar conta</button>
+</div>

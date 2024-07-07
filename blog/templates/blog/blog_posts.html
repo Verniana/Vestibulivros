@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Posts do Blog {% endblock %}
+
+{% block navbar %} {% include 'fragments/navbar.html' %} {% endblock %}
+
+{% block content %}
+
+            <!-- For que mostra todos os posts postados -->
+            <div class="col-xl-7">
+                {% for post in posts %}
+                    <div class="card mx-5 px-5 py-2">
+                        <a href="{% url 'post_detail' post.id %}">
+                            <img src="{{ post.imagem_post.url }}" class="card-img-top" alt="Imagem do card">
+                        </a>
+                        <div class="card-body pb-4">
+                            <a href="{% url 'post_detail' post.id %}" class="text-decoration-none text-dark">
+                                <h3 class="card-title" style="color: #8B4513;"><strong>{{ post.subtitulo }}</strong></h3>
+                            </a>
+                            <p class="card-text">{{ post.resumo|safe }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ post.data_publicacao }}</small>
+                            </p>
+                        </div>
+                    </div>
+
+                <div class="my-3"></div>
+                {% endfor %}
+            </div>
+
+{% endblock %}
+
+{% block footer %} {% include 'fragments/footer.html' %} {% endblock %}

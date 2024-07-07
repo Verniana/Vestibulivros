@@ -1,0 +1,28 @@
+{% extends "login/base.html" %}
+
+{% block title %} Login com redes sociais {% endblock %}
+
+{% block content %}
+
+<!-- Template para logar em contas do Google -->
+<div class="d-flex mt-5 justify-content-center">
+    <div class="card">
+        <div class="card-header" style="background-color: #8B4513;">
+            <h3 class="text-center fw-bold" style="color: #f5f5dc;">Login com redes sociais</h3>
+        </div>
+        <div class="card-body" style="color: #333;">
+            <h4>Você está prestes a se logar no Vestibulivros com sua conta {{ provider.name }}</h4>
+            <div class="d-flex mt-4 justify-content-center">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Botão para continuar o processo para logar da conta do Google -->
+                    <button class="btn btn-larg"  style="background-color: #8B4513; color: #f5f5dc;" type="submit">Continue</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

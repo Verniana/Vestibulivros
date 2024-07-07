@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Livros {% endblock %}
+
+{% block navbar %} {% include 'fragments/navbar.html' %} {% endblock %}
+
+{% block content %}
+<div class="col-xl-8">
+{% for livro in livros %}
+    <div class="card mb-3" style="width: 100%; height:370px;">
+        <div class="row g-0">
+
+            <!-- Imagem de capa do livro -->
+            <div class="col-md-4" style="width: 223px; height:370px;">
+                <a href="{% url 'book_detail' livro.id %}" class="text-decoration-none text-dark">
+                    <img src="{{ livro.capa.url }}" class="img-fluid rounded-start" alt="Capa do livro">
+                </a>
+            </div>
+
+            <div class="col-md-8">
+
+                <!-- Informações básicas sobre o livro -->
+                <div class="card-body ps-4">
+                    <a href="{% url 'book_detail' livro.id %}" class="text-decoration-none text-dark">
+                        <h3 class="card-title" style="color: #8B4513;"><strong>{{ livro.titulo }}</strong></h3>
+                    </a>
+                    <p class="card-text">{{ livro.sinopse|slice:":400"|safe }}...</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary" style="font-style: italic;">{{ livro.autor }}</small>
+                    </p>
+                    {% for vestibular in livro.vestibular_set.all %}
+                    <p class="card-text"><strong>{{ vestibular.nome }}</strong></p>
+                    {% endfor %}
+                </div>
+
+                <!-- Div que mostra opções para o vestibulando acessar o livro -->
+                <div class="row ps-4">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            <div class="span ms-0 ps-0 btn">
+
+                                <a href="{{ livro.link_pdf }}" class="text-decoration-none text-dark"><i
+                                        class="me-2 fa-solid fa-file-pdf fa-2xl" style="color: #8B4513;"></i></a>Acessar {{ livro.titulo }}
+
+                            </div>
+                            <div class="span ms-3 btn">
+                                <a href="{{ livro.link_amazon }}" class="text-decoration-none text-dark"><i
+                                        class="me-2 fa-brands fa-amazon fa-2xl" style="color: #8B4513;"></i></a>Comprar {{ livro.titulo }}
+
+                            </div>
+                            <div class="span ms-3 btn">
+
+                                <a href="{{ livro.link_spotify }}" class="text-decoration-none text-dark"><i
+                                        class="me-2 fa-brands fa-spotify fa-2xl" style="color: #8B4513;"></i></a>Ouvir {{ livro.titulo }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block footer %} {% include 'fragments/footer.html' %} {% endblock %}
